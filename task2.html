@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .horse
+        {
+            border: 1px solid gray;
+            padding: 20px;
+            width: 25%;
+        }
+        #stance
+        {
+            width: 340px;
+        }
+        .result
+        {
+            border: 1px solid gray;
+            padding: 10px;
+            width: 30%;
+            height: 150px;
+            border-style: outset;
+            box-sizing: border-box;
+            position: relative;
+            color: #808080;
+        }
+        #resOk
+        {
+            position: absolute;
+            left: 370px;
+            top: 110px;
+            padding: 7px 12px;
+            border-radius: 5px;
+            background: #6495ED;
+            color: #FFFFFF;
+        }
+    </style>
+    <script>
+        function chessHorse()
+        {
+            //создаем многомерный массив шахматная доска
+            let chessBoard = [
+                ['A8','B8','C8','D8','E8','F8','G8','H8'],
+                ['A7','B7','C7','D7','E7','F7','G7','H7'],
+                ['A6','B6','C6','D6','E6','F6','G6','H6'],
+                ['A5','B5','C5','D5','E5','F5','G5','H5'],
+                ['A4','B4','C4','D4','E4','F4','G4','H4'],
+                ['A3','B3','C3','D3','E3','F3','G3','H3'],
+                ['A2','B2','C2','D2','E2','F2','G2','H2'],
+                ['A1','B1','C1','D1','E1','F1','G1','H1'] ];
+
+            //создаем переменную от текстового поля исходное положение
+            let y = document.getElementById('stance').value;
+
+            //создаем переменные для цикла
+            let i, j;
+
+            //пишем цикл для перебора массива
+            for (i = 0; i < chessBoard.length; i++)
+            {
+                for (j = 0; j < chessBoard.length; j++)
+                {
+                    //условие, при котором y равняется одному из элементов массива
+                    if(chessBoard[i][j] == y)
+                    {
+                        //переменные возможных ходов
+                        let a, b, c, d, e, f, g, h;
+
+                        //определение переменных и условия их определений
+                        if((i > 1) && (j > 0)) a = chessBoard[i-2][j-1];
+
+                        if((i > 0) && (j > 1)) b = chessBoard[i-1][j-2];
+
+                        if((i < 6) && (j > 0)) c = chessBoard[i+2][j-1];
+
+                        if((i < 7) && (j > 1)) d = chessBoard[i+1][j-2];
+
+                        if((i < 6) && (j < 7)) e = chessBoard[i+2][j+1];
+
+                        if((i < 7) && (j < 6)) f = chessBoard[i+1][j+2];
+
+                        if((i > 1) && (j < 7)) g = chessBoard[i-2][j+1];
+
+                        if((i > 0) && (j < 6)) h = chessBoard[i-1][j+2];
+
+                        //массив возможных ходов
+                        let x =[];
+                        x.push(a);
+                        x.push(b);
+                        x.push(c);
+                        x.push(d);
+                        x.push(e);
+                        x.push(f);
+                        x.push(g);
+                        x.push(h);
+
+                        //вывод массива возможных ходов
+                        document.getElementById('res').innerHTML = x.join(' ');
+                    }
+                }
+            }
+        }
+        function clearForm()
+        {
+            document.getElementById('form1').reset();
+        }
+    </script>
+</head>
+<body>
+    <h3>Форма ввода:</h3>
+    <form id="form1">
+        <div class="horse" id="div1">
+            <label>Исходное положение:</label><br>
+            <input type="text" name="stance" id="stance"><br><br>
+            <input type="button" name="ok" id="ok" value="Ок" onclick="chessHorse();">
+        </div>
+        <h3>Вывод:</h3>
+        <div class="result">
+            <label>Возможные ходы:</label><br><br>
+            <div id="res"></div>
+            <input type="button" id="resOk" value="Ок" onclick="clearForm();">
+        </div>
+    </form>
+</body>
+</html>
